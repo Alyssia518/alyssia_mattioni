@@ -150,15 +150,45 @@
       transition: color 0.3s ease;
     }
 
-    .centered {
-      position: absolute;
-      top: 38%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      width: 100%;
-      max-width: 640px;
-      padding: 0 20px;
+    /* petite flèche qui invite à scroller, sous le HEY ! */
+    .scroll-hint {
+      margin-top: 60px;
+      font-family: 'Courier New', ui-monospace, monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.45;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    .scroll-hint svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .scroll-hint {
+        animation: none;
+      }
+    }
+
+    /* deuxième écran : le choix des univers */
+    .tracker-section {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 20px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
     }
 
     .hero h1 {
@@ -194,8 +224,7 @@
        ================================================ */
     .tracker-wrap {
       position: relative;
-      margin-top: 56px;
-      padding-top: 30px;
+      padding-top: 10px;
     }
 
     /* le point d'où partent tous les câbles, juste sous le "HEY !" */
@@ -462,45 +491,53 @@
 
     <main>
       <section class="hero-wrapper" id="hero">
-        <div class="hero detect-zone centered">
+        <div class="hero detect-zone">
           <h1>HEY !</h1>
-
-          <!-- TRACKER : patch de nodes façon TouchDesigner -->
-          <div class="tracker-wrap" id="trackerWrap">
-            <div class="tracker-hub" id="trackerHub"></div>
-            <svg class="tracker-svg" id="trackerSvg">
-              <defs>
-                <marker id="arrowHead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-                  <path d="M0,0 L6,3 L0,6 Z" fill="#000000" opacity="0.55"></path>
-                </marker>
-              </defs>
+          <div class="scroll-hint">
+            <span>Scroll</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 4v16m0 0l-6-6m6 6l6-6" />
             </svg>
-
-            <nav class="tracker" id="trackerNodes" aria-label="Catégories de projets">
-              <a class="tracker-item" href="projet2.html#motion">
-                <span class="tracker-item__index">01</span>
-                <span>Motion design</span>
-              </a>
-              <a class="tracker-item" href="projet2.html#uxui">
-                <span class="tracker-item__index">02</span>
-                <span>UX / UI</span>
-              </a>
-              <a class="tracker-item" href="projet2.html#touchdesigner">
-                <span class="tracker-item__index">03</span>
-                <span>TouchDesigner</span>
-              </a>
-              <a class="tracker-item" href="projet2.html#3d">
-                <span class="tracker-item__index">04</span>
-                <span>3D</span>
-              </a>
-              <a class="tracker-item" href="projet2.html#identite">
-                <span class="tracker-item__index">05</span>
-                <span>Identité</span>
-              </a>
-            </nav>
-
-            <p class="tracker-hint">// choisis un univers</p>
           </div>
+        </div>
+      </section>
+
+      <section class="tracker-section" id="trackerSection">
+        <!-- TRACKER : patch de nodes façon TouchDesigner -->
+        <div class="tracker-wrap" id="trackerWrap">
+          <div class="tracker-hub" id="trackerHub"></div>
+          <svg class="tracker-svg" id="trackerSvg">
+            <defs>
+              <marker id="arrowHead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="#000000" opacity="0.55"></path>
+              </marker>
+            </defs>
+          </svg>
+
+          <nav class="tracker" id="trackerNodes" aria-label="Catégories de projets">
+            <a class="tracker-item" href="projet2.html#motion">
+              <span class="tracker-item__index">01</span>
+              <span>Motion design</span>
+            </a>
+            <a class="tracker-item" href="projet2.html#uxui">
+              <span class="tracker-item__index">02</span>
+              <span>UX / UI</span>
+            </a>
+            <a class="tracker-item" href="projet2.html#touchdesigner">
+              <span class="tracker-item__index">03</span>
+              <span>TouchDesigner</span>
+            </a>
+            <a class="tracker-item" href="projet2.html#3d">
+              <span class="tracker-item__index">04</span>
+              <span>3D</span>
+            </a>
+            <a class="tracker-item" href="projet2.html#identite">
+              <span class="tracker-item__index">05</span>
+              <span>Identité</span>
+            </a>
+          </nav>
+
+          <p class="tracker-hint">// choisis un univers</p>
         </div>
       </section>
     </main>
