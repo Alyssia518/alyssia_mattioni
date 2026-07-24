@@ -65,6 +65,7 @@
     .main-content.show {
       display: flex;
       flex-direction: column;
+      overflow-x: hidden;
     }
 
     header {
@@ -188,7 +189,6 @@
       justify-content: center;
       align-items: center;
       padding: 60px 20px;
-      border-top: 1px solid rgba(0, 0, 0, 0.08);
     }
 
     .hero h1 {
@@ -246,11 +246,23 @@
       pointer-events: none;
     }
 
-    .tracker-svg path {
+    .tracker-svg path.connector {
       fill: none;
       stroke: #000000;
       stroke-width: 1.2;
-      opacity: 0.55;
+      stroke-dasharray: 3 5;
+      opacity: 0.45;
+    }
+
+    .tracker-svg path.connector-signal {
+      fill: #000000;
+      opacity: 0.75;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tracker-svg path.connector-signal {
+        display: none;
+      }
     }
 
     .tracker {
@@ -258,9 +270,17 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+      align-items: flex-start;
       gap: 22px;
       margin-top: 40px;
     }
+
+    /* décalages façon carte mentale — pas alignés en rangée droite */
+    .tracker-item:nth-child(1) { margin-top: 4px; }   /* Motion design — haut */
+    .tracker-item:nth-child(2) { margin-top: 74px; }  /* UX/UI — milieu */
+    .tracker-item:nth-child(3) { margin-top: 140px; } /* TouchDesigner — bas */
+    .tracker-item:nth-child(4) { margin-top: 140px; } /* 3D — bas, parallèle à TouchDesigner */
+    .tracker-item:nth-child(5) { margin-top: 4px; }   /* Identité — haut, parallèle à Motion design */
 
     .tracker-item {
       position: relative;
@@ -345,6 +365,13 @@
       .tracker-item {
         padding: 10px 14px;
         font-size: 0.82rem;
+      }
+      .tracker-item:nth-child(1),
+      .tracker-item:nth-child(2),
+      .tracker-item:nth-child(3),
+      .tracker-item:nth-child(4),
+      .tracker-item:nth-child(5) {
+        margin-top: 0;
       }
     }
 
@@ -494,7 +521,6 @@
         <div class="hero detect-zone">
           <h1>HEY !</h1>
           <div class="scroll-hint">
-            <span>Scroll</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path d="M12 4v16m0 0l-6-6m6 6l6-6" />
             </svg>
@@ -516,23 +542,18 @@
 
           <nav class="tracker" id="trackerNodes" aria-label="Catégories de projets">
             <a class="tracker-item" href="projet2.html#motion">
-              <span class="tracker-item__index">01</span>
               <span>Motion design</span>
             </a>
             <a class="tracker-item" href="projet2.html#uxui">
-              <span class="tracker-item__index">02</span>
               <span>UX / UI</span>
             </a>
             <a class="tracker-item" href="projet2.html#touchdesigner">
-              <span class="tracker-item__index">03</span>
               <span>TouchDesigner</span>
             </a>
             <a class="tracker-item" href="projet2.html#3d">
-              <span class="tracker-item__index">04</span>
               <span>3D</span>
             </a>
             <a class="tracker-item" href="projet2.html#identite">
-              <span class="tracker-item__index">05</span>
               <span>Identité</span>
             </a>
           </nav>
@@ -552,19 +573,19 @@
         </div>
       </div>
       <div class="footer-bottom">
-        © 2026 Alyssia Mattioni
+        © 2025 Alyssia Mattioni
       </div>
     </footer>
 
     <!-- Bulles Pac-Man -->
-    <div class="floating-bubble" style="top: 10%; left: 12%; animation-delay: 0s; transform: rotate(30deg);"></div>
+    <div class="floating-bubble" style="top: 10%; left: 14%; animation-delay: 0s; transform: rotate(30deg);"></div>
     <div class="floating-bubble" style="top: 25%; left: 42%; animation-delay: 1.2s; transform: rotate(90deg);"></div>
-    <div class="floating-bubble" style="top: 38%; left: 75%; animation-delay: 2.4s; transform: rotate(150deg);"></div>
-    <div class="floating-bubble" style="top: 52%; left: 18%; animation-delay: 3.1s; transform: rotate(210deg);"></div>
-    <div class="floating-bubble" style="top: 65%; left: 60%; animation-delay: 0.7s; transform: rotate(270deg);"></div>
-    <div class="floating-bubble" style="top: 75%; left: 85%; animation-delay: 2.9s; transform: rotate(330deg);"></div>
-    <div class="floating-bubble" style="top: 82%; left: 35%; animation-delay: 1.6s; transform: rotate(60deg);"></div>
-    <div class="floating-bubble" style="top: 90%; left: 8%; animation-delay: 0.3s; transform: rotate(120deg);"></div>
+    <div class="floating-bubble" style="top: 38%; left: 68%; animation-delay: 2.4s; transform: rotate(150deg);"></div>
+    <div class="floating-bubble" style="top: 52%; left: 20%; animation-delay: 3.1s; transform: rotate(210deg);"></div>
+    <div class="floating-bubble" style="top: 65%; left: 58%; animation-delay: 0.7s; transform: rotate(270deg);"></div>
+    <div class="floating-bubble" style="top: 75%; left: 70%; animation-delay: 2.9s; transform: rotate(330deg);"></div>
+    <div class="floating-bubble" style="top: 82%; left: 36%; animation-delay: 1.6s; transform: rotate(60deg);"></div>
+    <div class="floating-bubble" style="top: 90%; left: 14%; animation-delay: 0.3s; transform: rotate(120deg);"></div>
 
   </div>
 
@@ -592,15 +613,17 @@
       if (!wrap || !hub || !svg || !nodes.length) return;
 
       // nettoie les anciens tracés (garde les <defs>)
-      svg.querySelectorAll('path.connector').forEach((p) => p.remove());
+      svg.querySelectorAll('path.connector, path.connector-signal').forEach((p) => p.remove());
 
       const wrapRect = wrap.getBoundingClientRect();
       const hubRect = hub.getBoundingClientRect();
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const svgNS = 'http://www.w3.org/2000/svg';
 
       const hubX = hubRect.left + hubRect.width / 2 - wrapRect.left;
       const hubY = hubRect.top + hubRect.height / 2 - wrapRect.top;
 
-      nodes.forEach((node) => {
+      nodes.forEach((node, i) => {
         const nodeRect = node.getBoundingClientRect();
         const nodeX = nodeRect.left + nodeRect.width / 2 - wrapRect.left;
         const nodeY = nodeRect.top - wrapRect.top - 6; // s'arrête juste avant le plot du node
@@ -609,11 +632,28 @@
 
         const d = `M ${hubX} ${hubY} L ${hubX} ${midY} L ${nodeX} ${midY} L ${nodeX} ${nodeY}`;
 
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        const path = document.createElementNS(svgNS, 'path');
         path.setAttribute('d', d);
         path.setAttribute('class', 'connector');
         path.setAttribute('marker-end', 'url(#arrowHead)');
         svg.appendChild(path);
+
+        // petite pointe qui voyage le long du câble, comme un signal TouchDesigner
+        if (!reduceMotion) {
+          const signal = document.createElementNS(svgNS, 'path');
+          signal.setAttribute('d', 'M -3,-2.5 L 4,0 L -3,2.5 Z');
+          signal.setAttribute('class', 'connector-signal');
+
+          const anim = document.createElementNS(svgNS, 'animateMotion');
+          anim.setAttribute('dur', '1.8s');
+          anim.setAttribute('begin', `${i * 0.25}s`);
+          anim.setAttribute('repeatCount', 'indefinite');
+          anim.setAttribute('rotate', 'auto');
+          anim.setAttribute('path', d);
+          signal.appendChild(anim);
+
+          svg.appendChild(signal);
+        }
       });
     }
 
@@ -712,6 +752,8 @@
     }
 
     loadingVideo.addEventListener('ended', redirectToMain);
+    // si la vidéo ne trouve pas son fichier (pas encore uploadé), on saute direct
+    loadingVideo.addEventListener('error', redirectToMain);
 
     setTimeout(() => {
       if (!mainContent.classList.contains('show')) {
