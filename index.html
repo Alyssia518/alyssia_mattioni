@@ -246,6 +246,30 @@
       pointer-events: none;
     }
 
+    .tracker-motif-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .tracker-motif-svg path {
+      fill: none;
+      stroke: #000000;
+    }
+
+    .tracker-motif-svg circle {
+      fill: none;
+      stroke: #000000;
+    }
+
+    .tracker-motif-svg circle.is-dot {
+      fill: #000000;
+      stroke: none;
+    }
+
     .tracker-svg path.connector {
       fill: none;
       stroke: #000000;
@@ -422,6 +446,34 @@
       color: #000000;
     }
 
+    /* motif de lignes fluides + bulles, façon contour organique, au-dessus du contact */
+    .footer-motif {
+      width: 100%;
+      margin: 0 auto 22px;
+    }
+
+    .footer-motif svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      overflow: visible;
+    }
+
+    .footer-motif path {
+      fill: none;
+      stroke: #000000;
+    }
+
+    .footer-motif circle {
+      fill: none;
+      stroke: #000000;
+    }
+
+    .footer-motif circle.is-dot {
+      fill: #000000;
+      stroke: none;
+    }
+
     ::-webkit-scrollbar {
       display: none;
     }
@@ -531,6 +583,7 @@
       <section class="tracker-section" id="trackerSection">
         <!-- TRACKER : patch de nodes façon TouchDesigner -->
         <div class="tracker-wrap" id="trackerWrap">
+          <svg class="tracker-motif-svg" id="trackerMotif" aria-hidden="true"></svg>
           <div class="tracker-hub" id="trackerHub"></div>
           <svg class="tracker-svg" id="trackerSvg">
             <defs>
@@ -554,16 +607,19 @@
               <span>3D</span>
             </a>
             <a class="tracker-item" href="projet2.html#identite">
-              <span>Identité</span>
+              <span>Identité visuelle</span>
             </a>
           </nav>
 
-          <p class="tracker-hint">// choisis un univers</p>
         </div>
       </section>
     </main>
 
     <footer id="contact">
+      <div class="footer-motif" aria-hidden="true">
+        <svg id="footerMotif" viewBox="0 0 600 130"></svg>
+      </div>
+
       <div class="footer-content">
         <div class="contact-item">
           <a href="mailto:alyssia.mattioni@gmail.com">alyssia.mattioni@gmail.com</a>
@@ -660,12 +716,155 @@
     let trackerResizeTimeout;
     window.addEventListener('resize', () => {
       clearTimeout(trackerResizeTimeout);
-      trackerResizeTimeout = setTimeout(drawTrackerConnectors, 100);
+      trackerResizeTimeout = setTimeout(() => {
+        drawTrackerConnectors();
+        generateTrackerMotif();
+      }, 100);
     });
 
+    // Génère un motif de lignes fluides + bulles de tailles variées,
+    // façon contour organique / marbrure, avec quelques câbles
+    // pointillés animés façon TouchDesigner ici et là.
+    // Réutilisable : sert au footer ET au fond du tracker.
+    function drawOrganicMotif(svgId, W, H, opts) {
+      const svgNS = 'http://www.w3.org/2000/svg';
+      const svg = document.getElementById(svgId);
+      if (!svg) return;
+      svg.innerHTML = '';
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const STRANDS = opts.strands;
+      const BUBBLES = opts.bubbles;
+      const convergeY = opts.convergeY;
+      const convergeStrength = opts.convergeStrength;
+      const arrowId = `arrow-${svgId}`;
+
+      // flèche pour les câbles façon TouchDesigner
+      const defs = document.createElementNS(svgNS, 'defs');
+      defs.innerHTML = `
+        <marker id="${arrowId}" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto">
+          <path d="M0,0 L5,2.5 L0,5 Z" fill="#000000"></path>
+        </marker>`;
+      svg.appendChild(defs);
+
+      // une ligne sur trois environ sera un câble pointillé animé
+      const signalStrands = new Set();
+      for (let s = 0; s < STRANDS; s++) {
+        if (s % 3 === 1) signalStrands.add(s);
+      }
+
+      // -- les lignes qui serpentent horizontalement --
+      for (let s = 0; s < STRANDS; s++) {
+        let x = -10;
+        let y = 15 + Math.random() * (H - 30);
+        let angle = 0;
+        const points = [`M${x.toFixed(1)},${y.toFixed(1)}`];
+
+        while (x < W + 10) {
+          const stepLen = 14 + Math.random() * 10;
+          angle += (Math.random() - 0.5) * 0.8;
+          angle = Math.max(-1.1, Math.min(1.1, angle));
+          x += Math.cos(angle) * stepLen;
+          y += Math.sin(angle) * stepLen;
+          y = Math.max(6, Math.min(H - 6, y));
+
+          // convergence douce vers une zone cible
+          const pull = Math.exp(-((x - W / 2) ** 2) / (W * 43)) * convergeStrength;
+          y = y * (1 - pull) + convergeY * pull;
+
+          points.push(`L${x.toFixed(1)},${y.toFixed(1)}`);
+        }
+
+        const d = points.join(' ');
+        const path = document.createElementNS(svgNS, 'path');
+        path.setAttribute('d', d);
+        path.setAttribute('stroke-width', (0.55 + Math.random() * 0.25).toFixed(2));
+        path.setAttribute('opacity', (0.65 + Math.random() * 0.2).toFixed(2));
+
+        if (signalStrands.has(s)) {
+          path.setAttribute('stroke-dasharray', '2.5 4');
+          path.setAttribute('marker-end', `url(#${arrowId})`);
+        }
+        svg.appendChild(path);
+
+        // petite pointe qui voyage sur les câbles signalés
+        if (signalStrands.has(s) && !reduceMotion) {
+          const signal = document.createElementNS(svgNS, 'circle');
+          signal.setAttribute('r', '1.8');
+          signal.setAttribute('class', 'is-dot');
+          signal.setAttribute('opacity', '0.85');
+          const anim = document.createElementNS(svgNS, 'animateMotion');
+          anim.setAttribute('dur', `${3.5 + Math.random()}s`);
+          anim.setAttribute('repeatCount', 'indefinite');
+          anim.setAttribute('path', d);
+          signal.appendChild(anim);
+          svg.appendChild(signal);
+        }
+      }
+
+      // -- les bulles de tailles variées, éparpillées --
+      for (let i = 0; i < BUBBLES; i++) {
+        const cx = Math.random() * W;
+        let cy = 8 + Math.random() * (H - 16);
+        const pull = Math.exp(-((cx - W / 2) ** 2) / (W * 43)) * (convergeStrength * 0.8);
+        cy = cy * (1 - pull) + convergeY * pull;
+        const r = 1.5 + Math.random() * 9;
+        const isDot = Math.random() < 0.3;
+
+        const circle = document.createElementNS(svgNS, 'circle');
+        circle.setAttribute('cx', cx.toFixed(1));
+        circle.setAttribute('cy', cy.toFixed(1));
+        circle.setAttribute('r', r.toFixed(1));
+        circle.setAttribute('stroke-width', isDot ? '0' : (0.55 + Math.random() * 0.3).toFixed(2));
+        circle.setAttribute('opacity', (0.55 + Math.random() * 0.3).toFixed(2));
+        if (isDot) circle.setAttribute('class', 'is-dot');
+        svg.appendChild(circle);
+
+        // certaines bulles ont un petit anneau concentrique, comme sur la référence
+        if (!isDot && Math.random() < 0.3) {
+          const inner = document.createElementNS(svgNS, 'circle');
+          inner.setAttribute('cx', cx.toFixed(1));
+          inner.setAttribute('cy', cy.toFixed(1));
+          inner.setAttribute('r', (r * 0.55).toFixed(1));
+          inner.setAttribute('stroke-width', '0.5');
+          inner.setAttribute('opacity', '0.6');
+          svg.appendChild(inner);
+        }
+      }
+    }
+
+    function generateFooterMotif() {
+      drawOrganicMotif('footerMotif', 600, 130, {
+        strands: 7,
+        bubbles: 30,
+        convergeY: 130 * 0.72,
+        convergeStrength: 0.45,
+      });
+    }
+
+    function generateTrackerMotif() {
+      const wrap = document.getElementById('trackerWrap');
+      if (!wrap) return;
+      const rect = wrap.getBoundingClientRect();
+      const W = Math.max(280, Math.round(rect.width));
+      const H = Math.max(260, Math.round(rect.height));
+      drawOrganicMotif('trackerMotif', W, H, {
+        strands: 6,
+        bubbles: 18,
+        convergeY: H * 0.5,
+        convergeStrength: 0.3,
+      });
+    }
+
+    generateFooterMotif();
+
     function initMainPage() {
-      // dessine les câbles une fois le contenu affiché et mis en page
-      requestAnimationFrame(() => requestAnimationFrame(drawTrackerConnectors));
+      // dessine les câbles et le motif de fond une fois le contenu affiché et mis en page
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        drawTrackerConnectors();
+        generateTrackerMotif();
+      }));
 
       const bubbles = document.querySelectorAll('.floating-bubble');
       const detectZone = document.querySelector('.detect-zone');
