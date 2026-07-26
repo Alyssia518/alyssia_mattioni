@@ -40,17 +40,10 @@
     }
 
     .loading-video {
-      max-width: 60vw;
-      max-height: 40vh;
-      width: auto;
-      height: auto;
-    }
-
-    @media (max-width: 768px) {
-      .loading-video {
-        max-width: 80vw;
-        max-height: 30vh;
-      }
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      display: block;
     }
 
     .main-content {
@@ -525,7 +518,7 @@
 <body>
 
   <div class="loading-container" id="loadingContainer">
-    <video class="loading-video" id="loadingVideo" autoplay muted>
+    <video class="loading-video" id="loadingVideo" autoplay muted playsinline>
       <source src="img/carte-visite-ar.mp4" type="video/mp4" />
       Votre navigateur ne supporte pas la lecture de vidéos.
     </video>
