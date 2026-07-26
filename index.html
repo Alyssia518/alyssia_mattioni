@@ -614,7 +614,11 @@
     const loadingVideo = document.getElementById('loadingVideo');
     const mainContent = document.getElementById('mainContent');
 
+    // l'animation ne doit jouer qu'une fois par visite, pas à chaque retour sur l'accueil
+    const introAlreadyPlayed = sessionStorage.getItem('introPlayed') === 'true';
+
     function redirectToMain() {
+      sessionStorage.setItem('introPlayed', 'true');
       loadingContainer.classList.add('fade-out');
       setTimeout(() => {
         loadingContainer.style.display = 'none';
@@ -622,6 +626,14 @@
         document.body.style.overflow = 'auto';
         initMainPage();
       }, 500);
+    }
+
+    // si l'anim a déjà été vue cette session, on saute direct, sans vidéo ni fondu
+    if (introAlreadyPlayed) {
+      loadingContainer.style.display = 'none';
+      mainContent.classList.add('show');
+      document.body.style.overflow = 'auto';
+      initMainPage();
     }
 
     // Trace les câbles entre le hub et chaque node, comme dans un patch TouchDesigner
