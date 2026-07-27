@@ -84,6 +84,9 @@
     .card {
       border: 1px solid #000000;
       transition: transform 0.2s ease;
+      display: block;
+      text-decoration: none;
+      color: inherit;
     }
 
     .card:hover { transform: translateY(-4px); }
@@ -233,7 +236,7 @@
     <p class="page-intro">Modélisation, éclairage et animation, entre exercices techniques et rendus narratifs.</p>
 
     <div class="grid">
-      <article class="card">
+      <a class="card" href="bateau-3d.html">
         <div class="card__media">
           <!-- remplace par <img src="images/xxx.webp" alt="..."> ou un <video>/<iframe> -->
           <span class="card__placeholder">Média à venir</span>
@@ -243,9 +246,9 @@
           <h3>Animation 3D — bateau</h3>
           <p>Modélisation et animation d'un bateau stylisé, travail de lumière et de caméra.</p>
         </div>
-      </article>
+      </a>
 
-      <article class="card">
+      <a class="card" href="rendu-3d-interaction.html">
         <div class="card__media">
           <!-- remplace par <img src="images/xxx.webp" alt="..."> ou un <video>/<iframe> -->
           <span class="card__placeholder">Média à venir</span>
@@ -255,7 +258,7 @@
           <h3>Rendu 3D & interaction</h3>
           <p>Scène 3D avec suivi de mouvement, expérimentation autour de l'interaction gestuelle.</p>
         </div>
-      </article>
+      </a>
 
     </div>
   </main>
