@@ -105,6 +105,12 @@
       display: block;
     }
 
+    .project-media img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
     .project-description {
       font-size: 1rem;
       font-weight: 300;
@@ -116,7 +122,8 @@
     .project-description p + p {
       margin-top: 18px;
     }
-        footer {
+
+    footer {
       padding: 40px 0;
       text-align: center;
       font-size: 0.85rem;
@@ -227,7 +234,8 @@
         Création de 4 génériques et de guides destinés aux clients sur différents types de processus d’impression 3D.
       </p>
     </div>
-        <div class="project-media">
+
+    <div class="project-media">
       <video controls>
         <source src="img/generique_1R.mp4" type="video/mp4">
         Votre navigateur ne prend pas en charge la lecture vidéo.
@@ -240,19 +248,19 @@
         Votre navigateur ne prend pas en charge la lecture vidéo.
       </video>
     </div>
+    ### Partie 2 — fin du code
 
+```html
     <div class="project-media">
-      <video controls>
-        <source src="img/generique_3R.mp4" type="video/mp4">
-        Votre navigateur ne prend pas en charge la lecture vidéo.
-      </video>
+      <img src="img/storyboard_R.png" alt="Storyboard Replicad 3D" />
     </div>
 
     <div class="project-media">
-      <video controls>
-        <source src="img/generique_4R.mp4" type="video/mp4">
-        Votre navigateur ne prend pas en charge la lecture vidéo.
-      </video>
+      <img src="img/imp-plan.png" alt="Plan du projet Replicad 3D" />
+    </div>
+
+    <div class="project-media">
+      <img src="img/plan 2 générique brouillon.png" alt="Plan 2 du générique Replicad 3D" />
     </div>
 
   </main>
@@ -284,3 +292,12 @@
 
 </body>
 </html>
+```
+
+⚠️ Il faut juste vérifier que tes **3 images sont bien dans le dossier `img`** avec exactement ces noms :
+
+* `storyboard_R.png`
+* `imp-plan.png`
+* `plan 2 générique brouillon.png`
+
+Et avec ça, tu auras **2 vidéos puis les 3 images**, toutes affichées en grand sans être coupées.
