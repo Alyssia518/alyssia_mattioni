@@ -200,7 +200,7 @@
 </head>
 <body>
 
-  <a class="home-btn" href="index.html">accueil</a>
+  <a class="home-btn" href="index.html">retour</a>
 
   <header>
     <div class="title-block">
