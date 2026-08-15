@@ -670,14 +670,30 @@
       const hubX = hubRect.left + hubRect.width / 2 - wrapRect.left;
       const hubY = hubRect.top + hubRect.height / 2 - wrapRect.top;
 
+      const isMobile = window.innerWidth <= 768;
+
       nodes.forEach((node, i) => {
         const nodeRect = node.getBoundingClientRect();
-        const nodeX = nodeRect.left + nodeRect.width / 2 - wrapRect.left;
-        const nodeY = nodeRect.top - wrapRect.top - 6; // s'arrête juste avant le plot du node
+        let d;
 
-        const midY = hubY + (nodeY - hubY) * 0.55;
-
-        const d = `M ${hubX} ${hubY} L ${hubX} ${midY} L ${nodeX} ${midY} L ${nodeX} ${nodeY}`;
+        if (isMobile) {
+          // sur mobile, les cases sont empilées au centre : on longe alternativement
+          // le côté gauche et le côté droit au lieu de passer au milieu (caché derrière elles)
+          const nodeMidY = nodeRect.top + nodeRect.height / 2 - wrapRect.top;
+          const onLeft = i % 2 === 0;
+          const spineX = onLeft
+            ? nodeRect.left - wrapRect.left - 16
+            : nodeRect.right - wrapRect.left + 16;
+          const nodeEdgeX = onLeft
+            ? nodeRect.left - wrapRect.left - 3
+            : nodeRect.right - wrapRect.left + 3;
+          d = `M ${hubX} ${hubY} L ${spineX} ${hubY} L ${spineX} ${nodeMidY} L ${nodeEdgeX} ${nodeMidY}`;
+        } else {
+          const nodeX = nodeRect.left + nodeRect.width / 2 - wrapRect.left;
+          const nodeY = nodeRect.top - wrapRect.top - 6; // s'arrête juste avant le plot du node
+          const midY = hubY + (nodeY - hubY) * 0.55;
+          d = `M ${hubX} ${hubY} L ${hubX} ${midY} L ${nodeX} ${midY} L ${nodeX} ${nodeY}`;
+        }
 
         const path = document.createElementNS(svgNS, 'path');
         path.setAttribute('d', d);
