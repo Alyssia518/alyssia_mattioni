@@ -475,20 +475,14 @@
       cursor: grab;
       z-index: 5;
       touch-action: none;
-      border-radius: 50%; /* vrai cercle, plus de clip-path cassé */
-      overflow: hidden;
-    }
-
-    /* la bouche : un triangle blanc (couleur du fond) posé par-dessus le cercle noir */
-    .floating-bubble::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #ffffff;
-      clip-path: polygon(50% 50%, 100% 26%, 100% 74%);
+      border-radius: 50%;
+      clip-path: polygon(
+        50% 50%,
+        100% 0%,
+        100% 100%,
+        0% 100%,
+        0% 0%
+      );
     }
 
     @keyframes float {
@@ -694,7 +688,7 @@
         // petit Pac-Man qui voyage le long du câble
         if (!reduceMotion) {
           const signal = document.createElementNS(svgNS, 'path');
-          signal.setAttribute('d', 'M0,0 L2.6,-3.1 A4,4 0 1,1 2.6,3.1 Z');
+          signal.setAttribute('d', 'M0,0 L2.6,-3.1 A4,4 0 1,0 2.6,3.1 Z');
           signal.setAttribute('class', 'connector-signal');
 
           const anim = document.createElementNS(svgNS, 'animateMotion');
@@ -788,7 +782,7 @@
         // petit Pac-Man qui voyage sur les câbles signalés
         if (signalStrands.has(s) && !reduceMotion) {
           const signal = document.createElementNS(svgNS, 'path');
-          signal.setAttribute('d', 'M0,0 L1.9,-2.3 A3,3 0 1,1 1.9,2.3 Z');
+          signal.setAttribute('d', 'M0,0 L1.9,-2.3 A3,3 0 1,0 1.9,2.3 Z');
           signal.setAttribute('class', 'is-dot');
           signal.setAttribute('opacity', '0.85');
           const anim = document.createElementNS(svgNS, 'animateMotion');
@@ -823,7 +817,7 @@
           const pac = document.createElementNS(svgNS, 'path');
           pac.setAttribute(
             'd',
-            `M${cx.toFixed(1)},${cy.toFixed(1)} L${p1x.toFixed(1)},${p1y.toFixed(1)} A${r.toFixed(1)},${r.toFixed(1)} 0 1,1 ${p2x.toFixed(1)},${p2y.toFixed(1)} Z`
+            `M${cx.toFixed(1)},${cy.toFixed(1)} L${p1x.toFixed(1)},${p1y.toFixed(1)} A${r.toFixed(1)},${r.toFixed(1)} 0 1,0 ${p2x.toFixed(1)},${p2y.toFixed(1)} Z`
           );
           pac.setAttribute('class', 'is-dot');
           pac.setAttribute('opacity', (0.88 + Math.random() * 0.12).toFixed(2));
@@ -859,9 +853,10 @@
       const rect = section.getBoundingClientRect();
       const W = Math.max(280, Math.round(rect.width));
       const H = Math.max(260, Math.round(rect.height));
+      const isMobile = window.innerWidth <= 768;
       drawOrganicMotif('trackerMotif', W, H, {
-        strands: 9,
-        bubbles: 26,
+        strands: isMobile ? Math.max(9, Math.round(H / 70)) : 9,
+        bubbles: isMobile ? Math.max(26, Math.round(H / 22)) : 26,
         convergeY: H * 0.5,
         convergeStrength: 0.22,
         pacman: true,
