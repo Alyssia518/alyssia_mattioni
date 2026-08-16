@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>À propos — Alyssia Mattioni</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/png" href="img/logo perso.png" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html, body {
+    background:#ffffff;
+    color:#000000;
+    font-family:'Montserrat', sans-serif;
+    overflow-x:hidden;
+  }
+  ::-webkit-scrollbar{ display:none; }
+  html{ -ms-overflow-style:none; scrollbar-width:none; }
+
+  /* ---- header minimal : logo + burger ---- */
+  header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding: 34px 44px 0;
+  }
+
+  .back-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    border: 1px solid #000000;
+    border-radius: 999px;
+    padding: 8px 18px 8px 14px;
+    font-weight:500;
+    font-size:0.85rem;
+    letter-spacing:0.03em;
+    cursor:pointer;
+    text-decoration:none;
+    color:#000000;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .back-btn:hover{ background:#000000; color:#ffffff; }
+  .back-btn svg{ width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:2; }
+
+  .burger{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    cursor:pointer;
+    padding:8px;
+    background:none;
+    border:none;
+  }
+  .burger span{
+    width:26px;
+    height:1.5px;
+    background:#000000;
+    display:block;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .burger.open span:nth-child(1){ transform: translateY(7.5px) rotate(45deg); }
+  .burger.open span:nth-child(2){ opacity:0; }
+  .burger.open span:nth-child(3){ transform: translateY(-7.5px) rotate(-45deg); }
+
+  /* ---- menu overlay (cache Accueil / Sketchbook derrière le burger) ---- */
+  .nav-overlay{
+    position:fixed;
+    inset:0;
+    background:#ffffff;
+    z-index:50;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:28px;
+    transform: translateY(-100%);
+    transition: transform 0.45s cubic-bezier(.4,.05,.2,1);
+  }
+  .nav-overlay.open{ transform: translateY(0); }
+  .nav-overlay a{
+    font-size:2.4rem;
+    font-weight:500;
+    color:#000000;
+    text-decoration:none;
+    letter-spacing:1px;
+  }
+  .nav-overlay a:hover{ text-decoration:underline; }
+
+  /* ---- titre + flèche ---- */
+  .title-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    padding: 26px 44px 0;
+  }
+
+  h1{
+    font-size: clamp(3.4rem, 10vw, 7.2rem);
+    font-weight:600;
+    letter-spacing:-1px;
+    line-height:0.9;
+  }
+
+  .arrow-icon{
+    width: 64px; height:64px;
+    flex-shrink:0;
+    margin-top: 18px;
+  }
+  .arrow-icon svg{ width:100%; height:100%; stroke:#000000; stroke-width:1.4; fill:none; }
+
+  /* ---- corps : image grain + rows d'infos ---- */
+  .body-grid{
+    display:grid;
+    grid-template-columns: 240px 1fr;
+    gap: 40px;
+    padding: 56px 44px 0;
+    align-items:start;
+  }
+
+  .grain-panel{
+    position:relative;
+    aspect-ratio: 3/4;
+    background: #ffffff;
+    overflow:hidden;
+    border-radius:1px;
+    border: 1px solid #000000;
+  }
+  .grain-panel video{
+    width:100%;
+    height:100%;
+    object-fit: cover;
+    display:block;
+  }
+
+  .info-rows{ display:flex; flex-direction:column; }
+
+  .info-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid #000000;
+    text-decoration:none;
+    color:#000000;
+  }
+  .info-row:first-child{ border-top: 1px solid #000000; }
+
+  .info-label{
+    font-size:0.82rem;
+    font-weight:600;
+    letter-spacing:0.08em;
+    flex-shrink:0;
+  }
+  .info-value{
+    font-size:0.95rem;
+    font-weight:400;
+    text-align:right;
+    letter-spacing:0.02em;
+    transition: opacity 0.2s ease;
+  }
+  a.info-row:hover .info-value{ opacity:0.5; }
+
+  /* ---- réseaux, en colonnes comme la référence ---- */
+  .socials{
+    margin-top: 64px;
+    display:flex;
+    gap: 60px;
+    flex-wrap:wrap;
+  }
+  .social-col{
+    display:flex;
+    flex-direction:column;
+    gap: 8px;
+  }
+  .social-col a{
+    font-size:0.95rem;
+    color:#000000;
+    text-decoration:none;
+  }
+  .social-col a:hover{ text-decoration:underline; }
+
+  .copyright{
+    margin-left:auto;
+    align-self:flex-end;
+    font-size:0.85rem;
+    opacity:0.6;
+  }
+
+  footer{ height: 60px; }
+
+  /* ---- responsive ---- */
+  @media (max-width: 820px){
+    header{ padding: 26px 22px 0; }
+    .title-row{ padding: 20px 22px 0; }
+    .arrow-icon{ width:40px; height:40px; margin-top:8px; }
+    .body-grid{
+      grid-template-columns: 1fr;
+      padding: 40px 22px 0;
+      gap: 28px;
+    }
+    .grain-panel{ aspect-ratio: 16/9; max-width: 340px; }
+    .socials{ gap:32px; margin-top:48px; }
+    .copyright{ margin-left:0; align-self:flex-start; margin-top:20px; width:100%; }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <a class="back-btn" href="index.html">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M5 12l6-6M5 12l6 6"/></svg>
+      Retour
+    </a>
+    <button class="burger" id="burgerBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="nav-overlay" id="navOverlay">
+    <a href="index.html">Accueil</a>
+    <a href="Sketchbook.html">Sketchbook</a>
+  </div>
+
+  <div class="title-row">
+    <h1>À&nbsp;PROPOS</h1>
+    <div class="arrow-icon">
+      <svg viewBox="0 0 40 40"><path d="M10 10 L30 30 M30 30 L30 14 M30 30 L14 30"/></svg>
+    </div>
+  </div>
+
+  <div class="body-grid">
+    <div class="grain-panel">
+      <video autoplay muted loop playsinline>
+        <source src="motif.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <div>
+      <div class="info-rows">
+        <a class="info-row" href="cv.pdf" download>
+          <span class="info-label">CV</span>
+          <span class="info-value">TÉLÉCHARGER</span>
+        </a>
+        <a class="info-row" href="portfolio.pdf" download>
+          <span class="info-label">PORTFOLIO</span>
+          <span class="info-value">TÉLÉCHARGER</span>
+        </a>
+        <a class="info-row" href="mailto:alyssia.mattioni@gmail.com">
+          <span class="info-label">MAIL</span>
+          <span class="info-value">ALYSSIA.MATTIONI@GMAIL.COM</span>
+        </a>
+      </div>
+
+      <div class="socials">
+        <div class="social-col">
+          <a href="https://www.behance.net/tonprofil" target="_blank" rel="noopener">/ BEHANCE</a>
+          <a href="https://instagram.com/tonprofil" target="_blank" rel="noopener">/ INSTAGRAM</a>
+        </div>
+        <div class="social-col">
+          <a href="mailto:alyssia.mattioni@gmail.com">/ EMAIL</a>
+        </div>
+        <div class="copyright">© 2025</div>
+      </div>
+    </div>
+  </div>
+
+  <footer></footer>
+
+<script>
+  const burger = document.getElementById('burgerBtn');
+  const overlay = document.getElementById('navOverlay');
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    overlay.classList.toggle('open');
+  });
+</script>
+</body>
+</html>
