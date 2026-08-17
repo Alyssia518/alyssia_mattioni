@@ -302,11 +302,11 @@
 
     <div>
       <div class="info-rows">
-        <a class="info-row" href="cv.pdf" download>
+        <a class="info-row" href="img/cv.pdf" download>
           <span class="info-label">CV</span>
           <span class="info-value">TÉLÉCHARGER</span>
         </a>
-        <a class="info-row" href="portfolio.pdf" download>
+        <a class="info-row" href="img/portfolio.pdf" download>
           <span class="info-label">PORTFOLIO</span>
           <span class="info-value">TÉLÉCHARGER</span>
         </a>
@@ -325,7 +325,7 @@
           <a href="https://www.behance.net/alyssia1" target="_blank" rel="noopener">/ BEHANCE</a>
         </div>
         <div class="social-col">
-          <button class="social-copy" id="emailSocialBtn">/ EMAIL</button>
+          <a href="mailto:alyssia.mattioni@gmail.com">/ EMAIL</a>
         </div>
         <div class="copyright">© 2026</div>
       </div>
@@ -469,10 +469,6 @@
 
   const copyFeedback = document.getElementById('copyFeedback');
   document.getElementById('mailRow').addEventListener('click', () => copyEmail(copyFeedback));
-
-  // le lien "/ EMAIL" en bas fait la même chose : copier au lieu de mailto,
-  // qui ne fait rien sur un ordi sans logiciel mail par défaut configuré
-  document.getElementById('emailSocialBtn').addEventListener('click', () => copyEmail(null));
 </script>
 </body>
 </html>
