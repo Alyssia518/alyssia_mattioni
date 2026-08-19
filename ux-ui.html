@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,8 +7,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="img/logo perso.png" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     html, body {
       background: #ffffff;
@@ -41,7 +47,9 @@
       transition: opacity 0.2s ease;
     }
 
-    nav a:hover { opacity: 0.5; }
+    nav a:hover {
+      opacity: 0.5;
+    }
 
     main {
       max-width: 1100px;
@@ -59,7 +67,9 @@
       border-bottom: 1px solid #000000;
     }
 
-    .back-link:hover { opacity: 0.6; }
+    .back-link:hover {
+      opacity: 0.6;
+    }
 
     h1 {
       font-size: clamp(2rem, 5vw, 3rem);
@@ -86,7 +96,9 @@
       transition: transform 0.2s ease;
     }
 
-    .card:hover { transform: translateY(-4px); }
+    .card:hover {
+      transform: translateY(-4px);
+    }
 
     .card__media {
       aspect-ratio: 4 / 3;
@@ -147,8 +159,11 @@
       color: #000000;
     }
 
-    footer a { color: #000000; }
-
+    footer a {
+      color: #000000;
+    }
+```
+```html
     .next-project {
       position: fixed;
       right: 28px;
@@ -203,24 +218,32 @@
         width: 48px;
         height: 48px;
       }
+
       .next-project__label {
         display: none;
       }
     }
 
-
     @media (max-width: 768px) {
-      header { padding: 15px 20px; }
-      nav a { margin-left: 16px; font-size: 0.85rem; }
+      header {
+        padding: 15px 20px;
+      }
+
+      nav a {
+        margin-left: 16px;
+        font-size: 0.85rem;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <header>
     <div class="logo">
       <img src="img/logo insta.png" alt="Logo" />
     </div>
+
     <nav>
       <a href="apropos.html">À propos</a>
       <a href="projet2.html">Projets</a>
@@ -228,48 +251,81 @@
   </header>
 
   <main>
+
     <a class="back-link" href="index.html">← Retour à l'accueil</a>
+
     <h1>UX / UI</h1>
-    <p class="page-intro">Interfaces et prototypes pensés pour l'usage, du wireframe au rendu final.</p>
+
+    <p class="page-intro">
+      Interfaces et prototypes pensés pour l'usage, du wireframe au rendu final.
+    </p>
 
     <div class="grid">
+
+      <!-- PROJET 1 -->
       <article class="card">
+
         <div class="card__media">
-          <!-- remplace par <img src="images/xxx.webp" alt="..."> ou un <video>/<iframe> -->
           <span class="card__placeholder">Média à venir</span>
         </div>
+
         <div class="card__body">
           <span class="card__tag">Réalité augmentée</span>
           <h3>Carte de visite en réalité augmentée</h3>
           <p>Une carte de visite qui prend vie en RA au scan.</p>
         </div>
+
       </article>
 
-      <article class="card">
-        <div class="card__media">
-          <!-- remplace par <img src="images/xxx.webp" alt="..."> ou un <video>/<iframe> -->
-          <span class="card__placeholder">Média à venir</span>
-        </div>
-        <div class="card__body">
-          <span class="card__tag">Prototype Figma</span>
-          <h3>Application — artiste Asinine</h3>
-          <p>Prototype d'application dédiée à l'univers d'un artiste.</p>
-        </div>
-      </article>
+
+      <!-- PROJET 2 — ASININE -->
+      <a href="asinine-app.html" style="text-decoration: none; color: inherit;">
+
+        <article class="card">
+
+          <div class="card__media">
+            <span class="card__placeholder">Média à venir</span>
+          </div>
+
+          <div class="card__body">
+            <span class="card__tag">Prototype Figma</span>
+            <h3>Application — artiste Asinine</h3>
+            <p>Prototype d'application dédiée à l'univers d'un artiste.</p>
+          </div>
+
+        </article>
+
+      </a>
 
     </div>
+
   </main>
 
   <footer>
-    <a href="mailto:alyssia.mattioni@gmail.com">alyssia.mattioni@gmail.com</a>
+    <a href="mailto:alyssia.mattioni@gmail.com">
+      alyssia.mattioni@gmail.com
+    </a>
   </footer>
 
-  <a class="next-project" href="touchdesigner.html" aria-label="Projet suivant : TouchDesigner">
-    <span class="next-project__label">TouchDesigner</span>
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+  <a
+    class="next-project"
+    href="touchdesigner.html"
+    aria-label="Projet suivant : TouchDesigner"
+  >
+    <span class="next-project__label">
+      TouchDesigner
+    </span>
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+    >
       <path d="M5 12h14m0 0l-6-6m6 6l-6 6" />
     </svg>
   </a>
 
 </body>
 </html>
+```
