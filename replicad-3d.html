@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Replicad 3D — Portfolio Alyssia Mattioni</title>
+  <title>La cascade — Portfolio Alyssia Mattioni</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <link rel="icon" type="image/png" href="img/logo perso.png" />
@@ -21,35 +21,6 @@
       color: #000000;
       font-family: 'Montserrat', sans-serif;
       -webkit-font-smoothing: antialiased;
-    }
-
-    header {
-      padding: 20px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      background: #ffffff;
-      z-index: 10;
-    }
-
-    header .logo img {
-      height: 50px;
-      width: auto;
-      display: block;
-    }
-
-    nav a {
-      color: #000000;
-      margin-left: 30px;
-      text-decoration: none;
-      font-weight: 300;
-      transition: opacity 0.2s ease;
-    }
-
-    nav a:hover {
-      opacity: 0.5;
     }
 
     main {
@@ -117,6 +88,7 @@
       line-height: 1.7;
       max-width: 68ch;
       color: #222222;
+      margin-bottom: 36px;
     }
 
     .project-description p + p {
@@ -174,6 +146,7 @@
       opacity: 0;
       transition: opacity 0.2s ease;
       background: #ffffff;
+      color: #000000;
       padding: 4px 8px;
       border: 1px solid #000000;
     }
@@ -183,15 +156,6 @@
     }
 
     @media (max-width: 640px) {
-      header {
-        padding: 15px 20px;
-      }
-
-      nav a {
-        margin-left: 16px;
-        font-size: 0.85rem;
-      }
-
       .next-project {
         right: 18px;
         bottom: 18px;
@@ -208,59 +172,31 @@
 
 <body>
 
-  <header>
-    <div class="logo">
-      <img src="img/logo insta.png" alt="Logo" />
-    </div>
-
-    <nav>
-      <a href="apropos.html">À propos</a>
-      <a href="projet2.html">Projets</a>
-    </nav>
-  </header>
-
   <main>
 
     <a class="back-link" href="motion-design.html">
       ← Retour à Motion design
     </a>
 
-    <span class="project-tag">Entreprise</span>
+    <span class="project-tag">Motion design</span>
 
-    <h1>Replicad 3D</h1>
+    <h1>La cascade</h1>
 
     <div class="project-description">
       <p>
-        Création de 4 génériques et de guides destinés aux clients sur différents types de processus d’impression 3D.
+        Réalisation de quatre illustrations principales successives, pour créer une micro-animation.
       </p>
     </div>
 
     <div class="project-media">
       <video controls>
-        <source src="img/generique_1R.mp4" type="video/mp4">
+        <source src="img/cascade.mp4" type="video/mp4">
         Votre navigateur ne prend pas en charge la lecture vidéo.
       </video>
     </div>
 
     <div class="project-media">
-      <video controls>
-        <source src="img/generique_2R.mp4" type="video/mp4">
-        Votre navigateur ne prend pas en charge la lecture vidéo.
-      </video>
-    </div>
-  
-
-```html
-    <div class="project-media">
-      <img src="img/storyboard_R.png" alt="Storyboard Replicad 3D" />
-    </div>
-
-    <div class="project-media">
-      <img src="img/imp-plan.png" alt="Plan du projet Replicad 3D" />
-    </div>
-
-    <div class="project-media">
-      <img src="img/plan 2 générique brouillon.png" alt="Plan 2 du générique Replicad 3D" />
+      <img src="img/behance cascade.jpg" alt="La cascade — illustration" />
     </div>
 
   </main>
@@ -292,4 +228,3 @@
 
 </body>
 </html>
-```
