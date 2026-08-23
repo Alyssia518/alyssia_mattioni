@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>La cascade — Portfolio Alyssia Mattioni</title>
+  <title>Témoignage SEP — Portfolio Alyssia Mattioni</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <link rel="icon" type="image/png" href="img/logo perso.png" />
@@ -80,6 +80,13 @@
       width: 100%;
       height: auto;
       display: block;
+    }
+
+    /* format adapté aux réseaux sociaux (vertical) */
+    .project-media--social {
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .project-description {
@@ -178,25 +185,21 @@
       ← Retour à Motion design
     </a>
 
-    <span class="project-tag">Motion design</span>
+    <span class="project-tag">Association</span>
 
-    <h1>La cascade</h1>
+    <h1>Témoignage SEP</h1>
 
     <div class="project-description">
       <p>
-        Réalisation de quatre illustrations principales successives, pour créer une micro-animation.
+        Témoignage anonyme d'une personne atteinte de la sclérose en plaques, réalisé pour l'AFSEP dans un format adapté aux réseaux sociaux.
       </p>
     </div>
 
-    <div class="project-media">
+    <div class="project-media project-media--social">
       <video controls>
-        <source src="img/cascade.mp4" type="video/mp4">
+        <source src="img/Animation_AFSEP.mp4" type="video/mp4">
         Votre navigateur ne prend pas en charge la lecture vidéo.
       </video>
-    </div>
-
-    <div class="project-media">
-      <img src="img/behance cascade.jpg" alt="La cascade — illustration" />
     </div>
 
   </main>
@@ -209,11 +212,11 @@
 
   <a
     class="next-project"
-    href="motion-design.html"
-    aria-label="Retour à Motion design"
+    href="3d.html"
+    aria-label="Projet suivant : 3D"
   >
     <span class="next-project__label">
-      Motion design
+      3D
     </span>
 
     <svg
